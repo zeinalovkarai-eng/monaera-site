@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monaera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F6F2EB;
+      --ink: #1A1A1A;
+      --gold: #A88A4D;
+      --line: #D8D2C7;
+
+      --max-width: 1100px;
+      --text-narrow: 42rem;
+      --text-mid: 34rem;
+
+      --step--1: clamp(0.9rem, 0.86rem + 0.2vw, 1rem);
+      --step-0: clamp(1rem, 0.95rem + 0.3vw, 1.1rem);
+      --step-1: clamp(1.35rem, 1.2rem + 0.7vw, 1.8rem);
+      --step-2: clamp(2.4rem, 1.75rem + 2.1vw, 4rem);
+
+      --space-xs: 0.65rem;
+      --space-s: 1rem;
+      --space-m: 1.5rem;
+      --space-l: 2.4rem;
+      --space-xl: 4rem;
+      --space-2xl: 6rem;
+      --space-3xl: 8.5rem;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+      font-size: var(--step-0);
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 clamp(1.2rem, 3vw, 2.5rem);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 2rem 0 1.2rem;
+      border-bottom: 1px solid transparent;
+      position: sticky;
+      top: 0;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(2px);
+      z-index: 10;
+      transition: opacity 280ms ease;
+    }
+
+    .topbar.faded { opacity: 0.76; }
+
+    .wordmark {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 1.45rem;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .quiet-link {
+      color: var(--ink);
+      text-decoration: none;
+      font-size: var(--step--1);
+      border-bottom: 1px solid transparent;
+      transition: color 220ms ease, border-color 220ms ease;
+    }
+
+    .quiet-link:hover,
+    .quiet-link:focus-visible {
+      color: var(--gold);
+      border-color: var(--gold);
+      outline: none;
+    }
+
+    main { padding-top: var(--space-2xl); }
+
+    section {
+      padding: var(--space-3xl) 0;
+      border-top: 1px solid var(--line);
+    }
+
+    section:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      margin-bottom: var(--space-m);
+      font-weight: 500;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1, h2, h3 {
+      font-family: "Newsreader", Georgia, serif;
+      letter-spacing: -0.02em;
+      line-height: 1.12;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-size: var(--step-2);
+      max-width: 13ch;
+      margin-bottom: var(--space-l);
+    }
+
+    .hero p {
+      max-width: var(--text-mid);
+    }
+
+    .narrow { max-width: var(--text-narrow); }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1.4rem, 4vw, 3rem);
+      max-width: 900px;
+      margin-bottom: var(--space-l);
+    }
+
+    .split h3 { font-size: var(--step-1); margin-bottom: .4rem; }
+
+    .stages {
+      max-width: 850px;
+      border-top: 1px solid var(--line);
+    }
+
+    .stage {
+      padding: 1.2rem 0 1.3rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .stage h3 {
+      font-size: var(--step-1);
+      margin-bottom: .45rem;
+    }
+
+    .stage .roman {
+      color: var(--gold);
+      margin-right: .45rem;
+      font-family: "Inter", sans-serif;
+      font-size: var(--step--1);
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .inquiry {
+      max-width: 32rem;
+    }
+
+    form {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: .9rem;
+    }
+
+    label {
+      display: grid;
+      gap: .42rem;
+      font-size: var(--step--1);
+    }
+
+    input, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      padding: .68rem .72rem;
+      border-radius: 2px;
+      font: inherit;
+    }
+
+    input:focus-visible,
+    textarea:focus-visible {
+      outline: 1px solid var(--gold);
+      outline-offset: 1px;
+      border-color: var(--gold);
+    }
+
+    button {
+      width: fit-content;
+      background: transparent;
+      color: var(--ink);
+      border: none;
+      padding: 0;
+      margin-top: .3rem;
+      font: inherit;
+      cursor: pointer;
+      border-bottom: 1px solid currentColor;
+      transition: color 220ms ease;
+    }
+
+    button:hover,
+    button:focus-visible {
+      color: var(--gold);
+      outline: none;
+    }
+
+    .small-note {
+      font-size: var(--step--1);
+      color: color-mix(in srgb, var(--ink) 78%, white);
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 1.2rem 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+      font-size: .88rem;
+      color: color-mix(in srgb, var(--ink) 80%, white);
+    }
+
+    footer .wordmark { font-size: 1rem; }
+
+    footer .right { justify-self: end; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 600ms cubic-bezier(.2,.72,.2,1), transform 600ms cubic-bezier(.2,.72,.2,1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --space-3xl: 6.5rem;
+      }
+      .split {
+        grid-template-columns: 1fr;
+      }
+      .hero h1 {
+        max-width: 12ch;
+      }
+      footer {
+        grid-template-columns: 1fr auto;
+      }
+      footer div:nth-child(2) { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      .topbar {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar" id="topbar">
+      <a class="wordmark" href="#">Monaera</a>
+      <a class="quiet-link" href="#inquire">Inquire.</a>
+    </header>
+
+    <main>
+      <section class="hero reveal-group">
+        <h1 class="reveal">You built the audience.<br>We build the income behind it.</h1>
+        <p class="reveal">Monaera builds and operates high-ticket coaching programs for creators with trusted organic audiences. We design the offer, qualify demand, and run the sales operation — while you keep creating.</p>
+      </section>
+
+      <section class="reveal-group">
+        <p class="label reveal">Diagnosis</p>
+        <div class="narrow">
+          <p class="reveal">Trust. Attention. Authority.<br>Most businesses spend years trying to buy what you already have.</p>
+          <p class="reveal" style="margin-top:1rem;">But audience does not become income by itself. Without the right offer, qualification process, sales motion, and follow-up system, trust stays trapped inside content.</p>
+          <p class="reveal" style="margin-top:1rem;">Posting more is not the answer. The operation behind the audience is.</p>
+        </div>
+      </section>
+
+      <section class="reveal-group">
+        <p class="label reveal">What we do</p>
+        <div class="narrow">
+          <p class="reveal">Monaera is the revenue operation behind creator-led coaching.</p>
+          <p class="reveal" style="margin-top:1rem;">We design the premium offer. We run qualification, sales calls, follow-up, and enrollment. We build and operate the systems that turn audience trust into a working business — without the creator becoming an operator.</p>
+        </div>
+      </section>
+
+      <section class="reveal-group">
+        <p class="label reveal">Who it's for</p>
+        <div class="split">
+          <div>
+            <h3 class="reveal">Creators with trusted organic audiences and no premium offer.</h3>
+          </div>
+          <div>
+            <h3 class="reveal">Creators with an existing program that is underperforming.</h3>
+          </div>
+        </div>
+        <p class="narrow reveal">If either of those is you — and you have an organic audience that takes you seriously — we should talk.</p>
+      </section>
+
+      <section class="reveal-group">
+        <p class="label reveal">How it works</p>
+        <div class="stages">
+          <article class="stage reveal"><h3><span class="roman">I.</span>Offer architecture</h3><p>We design the premium program — positioning, structure, pricing, and the case for why it should exist.</p></article>
+          <article class="stage reveal"><h3><span class="roman">II.</span>Qualification</h3><p>We build the intake and filtering system that protects your time and surfaces the right buyers.</p></article>
+          <article class="stage reveal"><h3><span class="roman">III.</span>Sales operation</h3><p>We run the calls, the follow-up, and the close. The full motion, end to end.</p></article>
+          <article class="stage reveal"><h3><span class="roman">IV.</span>Content continues</h3><p>You keep showing up to your audience. The revenue operation runs behind it.</p></article>
+        </div>
+      </section>
+
+      <section class="reveal-group">
+        <p class="label reveal">Founder</p>
+        <div class="narrow">
+          <p class="reveal">Monaera is founded and run by Karai.</p>
+          <p class="reveal" style="margin-top:1rem;">My work has been in consultative high-ticket sales and creator monetization operations — the part most people never see: qualification, offer structure, follow-up logic, call flow, CRM systems, and closing.</p>
+          <p class="reveal" style="margin-top:1rem;">Monaera exists because creators usually do not have an audience problem. They have an operation problem. The skill that built the audience is not the same skill that turns it into a premium revenue channel.</p>
+        </div>
+      </section>
+
+      <section class="reveal-group">
+        <p class="label reveal">The call</p>
+        <div class="narrow">
+          <p class="reveal">The first call is not a pitch.</p>
+          <p class="reveal" style="margin-top:1rem;">We look at your audience, your current monetization, and the gap between the trust you have and the revenue it produces.</p>
+          <p class="reveal" style="margin-top:1rem;">You leave with a clear read on what should exist behind your content — and whether Monaera should be the one to build it.</p>
+          <p class="reveal" style="margin-top:1rem;">If the fit is obvious to both of us, we'll say so.</p>
+        </div>
+      </section>
+
+      <section id="inquire" class="reveal-group">
+        <p class="label reveal">Inquire</p>
+        <div class="inquiry">
+          <form id="inquiryForm" class="reveal">
+            <label>Email
+              <input type="email" name="email" required>
+            </label>
+            <label>What you create
+              <input type="text" name="create" required>
+            </label>
+            <label>What you're trying to solve
+              <textarea name="solve" rows="3" required></textarea>
+            </label>
+            <button type="submit">Send inquiry.</button>
+          </form>
+          <p class="small-note reveal">We respond personally within three business days.</p>
+          <p class="small-note" id="confirmation" hidden>Thank you. Your inquiry has been received.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <a class="wordmark" href="#">Monaera</a>
+      <div></div>
+      <div class="right">© <span id="year"></span></div>
+    </footer>
+  </div>
+
+  <script>
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const topbar = document.getElementById('topbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 36) topbar.classList.add('faded');
+      else topbar.classList.remove('faded');
+    });
+
+    const form = document.getElementById('inquiryForm');
+    const confirmation = document.getElementById('confirmation');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      form.hidden = true;
+      confirmation.hidden = false;
+    });
+
+    if (!reduceMotion) {
+      const groups = document.querySelectorAll('.reveal-group');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const reveals = entry.target.querySelectorAll('.reveal');
+          reveals.forEach((el, i) => {
+            el.style.transitionDelay = `${i * 100}ms`;
+            el.classList.add('visible');
+          });
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+
+      groups.forEach(group => observer.observe(group));
+    } else {
+      document.querySelectorAll('.reveal').forEach((el) => el.classList.add('visible'));
+    }
+  </script>
+</body>
+</html>
